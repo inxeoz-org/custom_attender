@@ -5,7 +5,7 @@
     import {
         get_attender_appointments_list,
         get_appointment_stats,
-    } from "@src/helper_attender.js";
+    } from "@src/api.js";
 
     let marked_exit_schedules = 0;
     let total_schedules = 0;

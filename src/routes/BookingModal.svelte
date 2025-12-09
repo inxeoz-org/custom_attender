@@ -7,7 +7,7 @@
         get_attender_appointment,
         get_attender_appointment_companion_list,
         mark_exit,
-    } from "@src/helper_attender.js";
+    } from "@src/api.js";
     import { json } from "@sveltejs/kit";
 
     export let appointmentId: string;

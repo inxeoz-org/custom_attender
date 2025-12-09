@@ -46,9 +46,7 @@
 <div class="centered-content" aria-label="Warm Welcome">
     <div class="centered-text">महाकाल दर्शन ATTENDER</div>
     <div class="button-group">
-        <button type="button" on:click={() => goto("/registration")}
-            >Register</button
-        >
+
         <button type="button" on:click={() => goto("/login")}>Login</button>
     </div>
 </div>

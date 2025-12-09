@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { get_self_profile, update_profile } from "@src/helper_attender.js";
+    import { get_self_profile, update_profile } from "@src/api.js";
     import {
         Card,
         Avatar,
@@ -19,7 +19,7 @@
     let name = "";
     let gender = "";
     let dob = "";
-    let address = "";
+    let location = "";
     let aadhar = "";
 
     let touched = { name: false, gender: false, dob: false };
@@ -35,7 +35,7 @@
             attender_name: name.trim(),
             gender,
             dob,
-            address: address.trim(),
+            location: location.trim(),
             aadhar: aadhar.trim(),
         };
 
@@ -52,7 +52,7 @@
         name = profle_data?.attender_name ?? "";
         gender = profle_data?.gender ?? "";
         dob = profle_data?.dob ?? "";
-        address = profle_data?.address ?? "";
+                                        location = profle_data?.location ?? "";
         aadhar = profle_data?.aadhar ?? "";
     });
 </script>
@@ -175,12 +175,12 @@
                         </div>
 
                         <div>
-                            <Label for="address">Address</Label>
+                            <Label for="location">Location</Label>
                             <Textarea
-                                id="address"
+                                id="location"
                                 rows="3"
                                 placeholder="123 Main St, Anytown"
-                                bind:value={address}
+                                bind:value={location}
                                 class="mt-1"
                             />
                         </div>
@@ -201,7 +201,7 @@
                                         name = profle_data?.attender_name ?? "";
                                         gender = profle_data?.gender ?? "";
                                         dob = profle_data?.dob ?? "";
-                                        address = profle_data?.address ?? "";
+        location = profle_data?.location ?? "";
                                         aadhar = profle_data?.aadhar ?? "";
                                     }}
                                 >

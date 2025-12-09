@@ -19,10 +19,9 @@
     // Import Toaster once (global notifications)
     import { Toaster } from "svelte-sonner";
     import { onMount } from "svelte";
-    import { get_logged_user } from "@src/helper.js";
 
-    onMount(async () => {
-        await get_logged_user();
+
+    onMount(() => {
         loading = false;
     });
 </script>
@@ -46,7 +45,7 @@
                 <NavLi href="/dashboard">Dashboard</NavLi>
                 <NavLi href="/dashboard/profile">Profile</NavLi>
             {:else}
-                <NavLi href="/registration">Registration</NavLi>
+
                 <NavLi href="/login">Login</NavLi>
             {/if}
         </NavUl>

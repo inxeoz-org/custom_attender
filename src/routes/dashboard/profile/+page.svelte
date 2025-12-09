@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { Card, Avatar, Badge, Button } from "flowbite-svelte";
-    import { get_self_profile } from "@src/helper_attender.js";
+    import { get_self_profile } from "@src/api.js";
     import { goto } from "$app/navigation";
 
     let profile: any = null;
