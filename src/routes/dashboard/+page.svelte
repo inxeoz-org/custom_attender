@@ -1,13 +1,13 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import type { Appointment } from "@src/app.js";
-    import BookingModal from "@src/routes/BookingModal.svelte";
-    import { get_appointments_list, get_appointment_stats } from "@src/api.js";
+    import { getAppointmentList, getAppointmentStats } from "@src/api.js";
+    import ShowAppointment from "../ShowAppointment.svelte";
 
     let marked_exit_schedules = 0;
     let total_schedules = 0;
 
-    let user = { name: "Suresh Kumar", id: 101 };
+    let user = {};
     let stats = { assigned: 0, exit: 0, attended: 0 };
     let devotees: Appointment[] = [];
 
@@ -24,24 +24,9 @@
         showModal = false;
     }
 
-    function handleMarkExit(id: string) {
-        console.log("Exit marked for booking", id);
-        stats.exit += 1;
-        stats.assigned = Math.max(0, stats.assigned - 1);
-        devotees = devotees.filter((d) => d.appointment !== id);
-        closeModal();
-    }
-
-    const todayLabel = new Date().toLocaleDateString(undefined, {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-
     onMount(async () => {
-        const json_data = await get_appointments_list(null);
-        const stats_json_data = await get_appointment_stats();
+        const json_data = await getAppointmentList(null);
+        const stats_json_data = await getAppointmentStats(null);
 
         if (json_data?.message) {
             devotees = json_data.message;
@@ -175,11 +160,8 @@
     </div>
 </div>
 
-{#if showModal}<BookingModal
-        bind:showModal
-        on:markExit={(e) => handleMarkExit(e.detail)}
+{#if showModal}<ShowAppointment
         on:close={closeModal}
-        {currentBooking}
         appointmentId={currentBooking.appointment}
     />
 {/if}

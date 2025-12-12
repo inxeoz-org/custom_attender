@@ -76,7 +76,7 @@
                     Login
                 </h2>
 
-                <Badge color="indigo">Approver</Badge>
+                <Badge color="indigo">Attender</Badge>
 
                 <div>
                     <Label for="phone">Phone Number</Label>
