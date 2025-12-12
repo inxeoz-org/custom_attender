@@ -157,23 +157,18 @@ export async function updateEmail(newEmail: string, otpEmail: string) {
 }
 
 // Appointment APIs
-export async function get_attender_appointments_list(
-  slot_date?: string | null,
-) {
+export async function get_appointments_list(slot_date: string | null) {
   try {
-    const res = await fetch(
-      ATTENDER + "attender.get_attender_appointment_list",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: get(auth_token),
-        },
-        body: JSON.stringify({
-          slot_date,
-        }),
+    const res = await fetch(ATTENDER + "attender.get_appointment_list", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: get(auth_token),
       },
-    );
+      body: JSON.stringify({
+        slot_date,
+      }),
+    });
 
     const data = await res.json();
     return data;
@@ -204,7 +199,7 @@ export async function get_attender_appointment(appointment_id: string) {
   }
 }
 
-export async function get_appointment_stats() {
+export async function get_appointment_stats(slot_date: string | null) {
   try {
     const res = await fetch(ATTENDER + "attender.get_appointment_stats", {
       method: "POST",
@@ -212,6 +207,9 @@ export async function get_appointment_stats() {
         "Content-Type": "application/json",
         Authorization: get(auth_token),
       },
+      body: JSON.stringify({
+        slot_date: slot_date,
+      }),
     });
 
     const data = await res.json();

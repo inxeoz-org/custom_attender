@@ -2,10 +2,7 @@
     import { onMount } from "svelte";
     import type { Appointment } from "@src/app.js";
     import BookingModal from "@src/routes/BookingModal.svelte";
-    import {
-        get_attender_appointments_list,
-        get_appointment_stats,
-    } from "@src/api.js";
+    import { get_appointments_list, get_appointment_stats } from "@src/api.js";
 
     let marked_exit_schedules = 0;
     let total_schedules = 0;
@@ -43,7 +40,7 @@
     });
 
     onMount(async () => {
-        const json_data = await get_attender_appointments_list(null);
+        const json_data = await get_appointments_list(null);
         const stats_json_data = await get_appointment_stats();
 
         if (json_data?.message) {
