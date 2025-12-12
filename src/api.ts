@@ -43,7 +43,7 @@ export async function verifyOtpLogin(phone: string, otp: string) {
 }
 
 // Profile APIs
-export async function get_self_profile() {
+export async function getProfile() {
   try {
     const res = await fetch(ATTENDER + "profile.profile", {
       method: "POST",
@@ -62,7 +62,7 @@ export async function get_self_profile() {
   }
 }
 
-export async function update_profile(profileData: {
+export async function updateProfile(profileData: {
   attender_name: string;
   gender: string;
   dob: string;
@@ -157,7 +157,7 @@ export async function updateEmail(newEmail: string, otpEmail: string) {
 }
 
 // Appointment APIs
-export async function get_appointments_list(slot_date: string | null) {
+export async function getAppointmentList(slot_date: string | null) {
   try {
     const res = await fetch(ATTENDER + "attender.get_appointment_list", {
       method: "POST",
@@ -178,9 +178,9 @@ export async function get_appointments_list(slot_date: string | null) {
   }
 }
 
-export async function get_attender_appointment(appointment_id: string) {
+export async function getAppointment(appointment_id: string) {
   try {
-    const res = await fetch(ATTENDER + "attender.get_attender_appointment", {
+    const res = await fetch(ATTENDER + "attender.get_appointment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -199,7 +199,7 @@ export async function get_attender_appointment(appointment_id: string) {
   }
 }
 
-export async function get_appointment_stats(slot_date: string | null) {
+export async function getAppointmentStats(slot_date: string | null) {
   try {
     const res = await fetch(ATTENDER + "attender.get_appointment_stats", {
       method: "POST",
@@ -220,7 +220,7 @@ export async function get_appointment_stats(slot_date: string | null) {
   }
 }
 
-export async function mark_exit(appointment_id: string) {
+export async function markExit(appointment_id: string) {
   try {
     const res = await fetch(ATTENDER + "attender.mark_exit", {
       method: "POST",
@@ -241,60 +241,23 @@ export async function mark_exit(appointment_id: string) {
   }
 }
 
-export async function get_attender_appointment_companion_list(
-  appointment_id: string,
-) {
+export async function getAppointmentCompanion(appointment_id: string) {
   try {
-    const res = await fetch(
-      ATTENDER + "attender.get_attender_appointment_companion_list",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: get(auth_token),
-        },
-        body: JSON.stringify({
-          appointment_id: appointment_id,
-        }),
+    const res = await fetch(ATTENDER + "attender.get_appointment_companion", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: get(auth_token),
       },
-    );
+      body: JSON.stringify({
+        appointment_id: appointment_id,
+      }),
+    });
 
     const data = await res.json();
     return data;
   } catch (err: any) {
     console.error("get_attender_appointment_companion_list:", err);
     return null;
-  }
-}
-
-// Logout function
-export async function logout() {
-  try {
-    // Clear the authentication token
-    auth_token.set("");
-
-    // Set user as logged out
-    user_logged_in.set(false);
-
-    // Navigate to home page
-    await goto("/");
-
-    return { success: true, message: "Logged out successfully" };
-  } catch (err: any) {
-    console.error("logout:", err);
-    return { success: false, message: "Logout failed" };
-  }
-}
-
-// Utility function to delete all cookies
-export function deleteAllCookies() {
-  const cookies = document.cookie.split(";");
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i];
-    const eqPos = cookie.indexOf("=");
-    const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
-
-    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
   }
 }

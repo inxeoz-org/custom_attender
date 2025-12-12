@@ -16,9 +16,31 @@
     let otpSent: boolean = false;
     let otpLoading: boolean = false;
 
-    async function sendOtp() {
+    // Form validation
+    let phoneError: string = "";
+    let otpError: string = "";
+
+    // Focus management
+    let phoneInput: HTMLInputElement;
+    let otpInput: HTMLInputElement;
+
+    function validatePhone(): boolean {
+        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
         if (!phone.trim()) {
-            toast.error("Please enter phone number");
+            phoneError = "Phone number is required";
+            return false;
+        }
+        if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+            phoneError = "Please enter a valid phone number";
+            return false;
+        }
+        phoneError = "";
+        return true;
+    }
+
+    async function sendOtp() {
+        if (!validatePhone()) {
+            phoneInput?.focus();
             return;
         }
 
@@ -29,6 +51,8 @@
             otpSent = true;
             console.log(result?.message);
             toast.success("OTP sent to your phone");
+            // Auto-focus OTP input after a short delay
+            setTimeout(() => otpInput?.focus(), 100);
         } else {
             toast.error("Failed to send OTP: " + JSON.stringify(result));
         }
@@ -36,11 +60,24 @@
         otpLoading = false;
     }
 
+    function validateOtp(): boolean {
+        if (!otp.trim()) {
+            otpError = "OTP is required";
+            return false;
+        }
+        if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+            otpError = "Please enter a valid 6-digit OTP";
+            return false;
+        }
+        otpError = "";
+        return true;
+    }
+
     async function verifyOtp(e: SubmitEvent) {
         e?.preventDefault();
 
-        if (!otp.trim()) {
-            toast.error("Please enter OTP");
+        if (!validateOtp()) {
+            otpInput?.focus();
             return;
         }
 
@@ -55,40 +92,53 @@
             toast.success("Login successful");
             await goto("/dashboard");
         } else {
-            toast.error("Invalid OTP: " + JSON.stringify(result));
+            otpError = "Invalid OTP. Please try again.";
+            otpInput?.focus();
             loading = false;
         }
     }
 </script>
 
 <div class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-    <Card class="w-full max-w-md p-10">
+    <Card class="w-full max-w-md p-8 shadow-xl">
         {#if !otpSent}
             <!-- Phone Number Input -->
             <form
                 class="space-y-4"
                 on:submit|preventDefault={sendOtp}
                 aria-busy={otpLoading}
+                aria-labelledby="login-heading"
             >
-                <h2
-                    class="text-xl font-semibold text-gray-800 flex justify-center"
-                >
-                    Login
-                </h2>
+                <div class="text-center">
+                    <h2
+                        id="login-heading"
+                        class="text-2xl font-bold text-gray-800 mb-2"
+                    >
+                        Welcome Back
+                    </h2>
+                    <p class="text-gray-600 text-sm">Enter your phone number to continue</p>
+                </div>
 
-                <Badge color="indigo">Attender</Badge>
+                <Badge color="indigo" class="mx-auto w-fit">Attender Portal</Badge>
 
                 <div>
                     <Label for="phone">Phone Number</Label>
                     <Input
+                        bind:this={phoneInput}
                         id="phone"
-                        type="text"
+                        type="tel"
                         bind:value={phone}
                         placeholder="Enter phone number"
                         inputmode="tel"
                         autocomplete="tel"
                         required
+                        class:error={phoneError}
+                        aria-describedby={phoneError ? "phone-error" : undefined}
+                        on:input={() => { if (phoneError) phoneError = ""; }}
                     />
+                    {#if phoneError}
+                        <p id="phone-error" class="mt-1 text-sm text-red-600">{phoneError}</p>
+                    {/if}
                 </div>
 
                 <div class="flex items-center justify-center">
@@ -96,26 +146,38 @@
                         type="submit"
                         disabled={otpLoading}
                         aria-disabled={otpLoading}
-                        class="min-lg:w-7xl"
                     >
-                        {#if otpLoading}Sending OTP...{:else}Send OTP{/if}
+                        {#if otpLoading}
+                            <svg class="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                            Sending OTP...
+                        {:else}
+                            Send OTP
+                        {/if}
                     </Button>
                 </div>
             </form>
         {:else}
             <!-- OTP Verification -->
-            <form class="space-y-4" on:submit={verifyOtp} aria-busy={loading}>
-                <h2
-                    class="text-xl font-semibold text-gray-800 flex justify-center"
-                >
-                    Verify OTP
-                </h2>
+            <form class="space-y-4" on:submit={verifyOtp} aria-busy={loading} aria-labelledby="otp-heading">
+                <div class="text-center">
+                    <h2
+                        id="otp-heading"
+                        class="text-2xl font-bold text-gray-800 mb-2"
+                    >
+                        Verify Your Identity
+                    </h2>
+                    <p class="text-gray-600 text-sm">Enter the 6-digit code sent to your phone</p>
+                </div>
 
-                <Badge color="indigo">Approver</Badge>
+                <Badge color="indigo" class="mx-auto w-fit">Attender Portal</Badge>
 
                 <div>
                     <Label for="otp">Enter OTP</Label>
                     <Input
+                        bind:this={otpInput}
                         id="otp"
                         type="text"
                         bind:value={otp}
@@ -123,7 +185,13 @@
                         inputmode="numeric"
                         maxlength="6"
                         required
+                        class:error={otpError}
+                        aria-describedby={otpError ? "otp-error" : undefined}
+                        on:input={() => { if (otpError) otpError = ""; }}
                     />
+                    {#if otpError}
+                        <p id="otp-error" class="mt-1 text-sm text-red-600">{otpError}</p>
+                    {/if}
                     <p class="text-sm text-gray-600 mt-1">
                         OTP sent to: {phone}
                     </p>
@@ -147,9 +215,19 @@
                         color="outline"
                         disabled={otpLoading}
                         on:click={sendOtp}
+                        aria-describedby="resend-help"
                     >
-                        {#if otpLoading}Sending...{:else}Resend OTP{/if}
+                        {#if otpLoading}
+                            <svg class="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                            Sending...
+                        {:else}
+                            Resend OTP
+                        {/if}
                     </Button>
+                    <p id="resend-help" class="sr-only">Resend the OTP to your phone number</p>
                 </div>
 
                 <div class="flex items-center justify-center">
@@ -158,7 +236,15 @@
                         disabled={loading}
                         aria-disabled={loading}
                     >
-                        {#if loading}Verifying...{:else}Verify OTP{/if}
+                        {#if loading}
+                            <svg class="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                            Verifying...
+                        {:else}
+                            Verify OTP
+                        {/if}
                     </Button>
                 </div>
             </form>

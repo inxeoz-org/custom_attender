@@ -43,11 +43,20 @@
     </svg>
 </div>
 
-<div class="centered-content" aria-label="Warm Welcome">
-    <div class="centered-text">महाकाल दर्शन ATTENDER</div>
-    <div class="button-group">
-
-        <button type="button" on:click={() => goto("/login")}>Login</button>
+    <main class="centered-content" role="main" aria-label="Mahakal Darshan Attender Welcome Page">
+    <div class="text-content">
+        <h1 class="centered-text animate-fade-in">महाकाल दर्शन</h1>
+        <p class="subtitle animate-fade-in-delay">Attender Portal</p>
+        <p class="description animate-fade-in-delay-2">Manage devotee appointments with care and devotion</p>
+    </div>
+    <div class="button-group animate-fade-in-delay-3">
+        <button type="button" on:click={() => goto("/login")} class="login-btn" aria-describedby="login-description">
+            <span>Login</span>
+            <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+        <div id="login-description" class="sr-only">Click to access the attender login portal</div>
     </div>
 </div>
 
@@ -73,40 +82,180 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-family: "Georgia", serif;
-        color: #7a5c2e; /* warm dark brown */
+        color: #7a5c2e;
         user-select: none;
         text-align: center;
+        max-width: 90vw;
+        width: 100%;
+    }
+
+    .text-content {
+        margin-bottom: 3rem;
     }
 
     .centered-text {
-        font-size: 4rem;
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        font-weight: 300;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+        line-height: 1.2;
         pointer-events: none;
-        margin-bottom: 2rem;
+    }
+
+    .subtitle {
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+    }
+
+    .description {
+        font-size: clamp(0.9rem, 2vw, 1.1rem);
+        font-weight: 300;
+        opacity: 0.8;
+        max-width: 400px;
+        margin: 0 auto;
+        line-height: 1.6;
     }
 
     .button-group {
-        pointer-events: auto; /* allow interaction */
+        pointer-events: auto;
         display: flex;
         gap: 1.5rem;
         justify-content: center;
     }
 
-    button {
+    .login-btn {
         font-family: "Georgia", serif;
-        font-size: 1.5rem;
-        padding: 0.75rem 2rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: 1rem 2.5rem;
         border: 2px solid #7a5c2e;
         background-color: transparent;
         color: #7a5c2e;
         cursor: pointer;
-        border-radius: 8px;
-        transition:
-            background-color 0.3s ease,
-            color 0.3s ease;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        overflow: hidden;
     }
 
-    button:hover {
+    .login-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .login-btn:hover::before {
+        left: 100%;
+    }
+
+    .login-btn:hover {
         background-color: #7a5c2e;
         color: #edf6f9;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(122, 92, 46, 0.3);
+    }
+
+    .arrow-icon {
+        width: 1.2rem;
+        height: 1.2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .login-btn:hover .arrow-icon {
+        transform: translateX(3px);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    .animate-fade-in-delay {
+        animation: fadeIn 1s ease-out 0.3s forwards;
+        opacity: 0;
+    }
+
+    .animate-fade-in-delay-2 {
+        animation: fadeIn 1s ease-out 0.6s forwards;
+        opacity: 0;
+    }
+
+    .animate-fade-in-delay-3 {
+        animation: fadeIn 1s ease-out 0.9s forwards;
+        opacity: 0;
+    }
+
+    /* Accessibility */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* Focus management */
+    .login-btn:focus {
+        outline: 2px solid #7a5c2e;
+        outline-offset: 4px;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+        .centered-content {
+            padding: 2rem;
+        }
+
+        .text-content {
+            margin-bottom: 2rem;
+        }
+
+        .centered-text {
+            font-size: 3rem;
+        }
+
+        .login-btn {
+            font-size: 1.1rem;
+            padding: 0.9rem 2rem;
+        }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .animate-fade-in,
+        .animate-fade-in-delay,
+        .animate-fade-in-delay-2,
+        .animate-fade-in-delay-3 {
+            animation: none;
+        }
+
+        .login-btn:hover {
+            transform: none;
+        }
     }
 </style>
