@@ -43,22 +43,46 @@
     </svg>
 </div>
 
-    <main class="centered-content" role="main" aria-label="Mahakal Darshan Attender Welcome Page">
+<main
+    class="centered-content"
+    role="main"
+    aria-label="Mahakal Darshan Attender Welcome Page"
+>
     <div class="text-content">
         <h1 class="centered-text animate-fade-in">महाकाल दर्शन</h1>
         <p class="subtitle animate-fade-in-delay">Attender Portal</p>
-        <p class="description animate-fade-in-delay-2">Manage devotee appointments with care and devotion</p>
+        <p class="description animate-fade-in-delay-2">
+            Manage devotee appointments with care and devotion
+        </p>
     </div>
     <div class="button-group animate-fade-in-delay-3">
-        <button type="button" on:click={() => goto("/login")} class="login-btn" aria-describedby="login-description">
+        <button
+            type="button"
+            on:click={() => goto("/login")}
+            class="login-btn"
+            aria-describedby="login-description"
+        >
             <span>Login</span>
-            <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            <svg
+                class="arrow-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                ></path>
             </svg>
         </button>
-        <div id="login-description" class="sr-only">Click to access the attender login portal</div>
+        <div id="login-description" class="sr-only">
+            Click to access the attender login portal
+        </div>
     </div>
-</div>
+</main>
 
 <style>
     :global(html, body, #svelte) {
@@ -144,13 +168,18 @@
     }
 
     .login-btn::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
         transition: left 0.5s;
     }
 
