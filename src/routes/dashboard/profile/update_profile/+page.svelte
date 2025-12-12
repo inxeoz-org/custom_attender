@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { get_self_profile, update_profile } from "@src/api.js";
+    import { getProfile, updateProfile } from "@src/api.js";
     import {
         Card,
         Avatar,
@@ -52,7 +52,7 @@
         name = profle_data?.attender_name ?? "";
         gender = profle_data?.gender ?? "";
         dob = profle_data?.dob ?? "";
-                                        location = profle_data?.location ?? "";
+        location = profle_data?.location ?? "";
         aadhar = profle_data?.aadhar ?? "";
     });
 </script>
@@ -201,7 +201,7 @@
                                         name = profle_data?.attender_name ?? "";
                                         gender = profle_data?.gender ?? "";
                                         dob = profle_data?.dob ?? "";
-        location = profle_data?.location ?? "";
+                                        location = profle_data?.location ?? "";
                                         aadhar = profle_data?.aadhar ?? "";
                                     }}
                                 >
