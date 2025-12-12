@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import type { ATTENDER_APPOINTMENT } from "@src/store.js";
+    import type { Appointment } from "@src/app.js";
     import BookingModal from "@src/routes/BookingModal.svelte";
     import {
         get_attender_appointments_list,
@@ -12,12 +12,12 @@
 
     let user = { name: "Suresh Kumar", id: 101 };
     let stats = { assigned: 0, exit: 0, attended: 0 };
-    let devotees: ATTENDER_APPOINTMENT[] = [];
+    let devotees: Appointment[] = [];
 
     let showModal = false;
-    let currentBooking: ATTENDER_APPOINTMENT;
+    let currentBooking: Appointment;
 
-    function openModal(booking: ATTENDER_APPOINTMENT) {
+    function openModal(booking: Appointment) {
         currentBooking = booking;
 
         showModal = true;

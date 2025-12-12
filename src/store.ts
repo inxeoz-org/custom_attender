@@ -1,33 +1,21 @@
 import { writable } from "svelte/store";
+import { browser } from "$app/environment"; // ✅ critical for SSR
 
-export interface Action {
-  id: string;
-  label: string;
+const AUTH_TOKEN_NAME = "attender_auth_token";
+// ✅ SAFE localStorage usage
+const storedToken = browser ? localStorage.getItem(AUTH_TOKEN_NAME) : "";
+
+export const auth_token = writable<string>(storedToken || "");
+
+// ✅ Sync with localStorage only in browser
+if (browser) {
+  auth_token.subscribe((value) => {
+    if (value) {
+      localStorage.setItem(AUTH_TOKEN_NAME, value);
+    } else {
+      localStorage.removeItem(AUTH_TOKEN_NAME);
+    }
+  });
 }
 
-export type ATTENDER_APPOINTMENT = {
-  appointment: string;
-  appointment_date: string;
-  appointment_type: string;
-  mark_exit: number;
-  name: string;
-  slot_end_time: string;
-  slot_start_time: string;
-  group_size: string;
-  primary_devoteee_name: string;
-};
-
-const defaultActions: Action[] = [
-  { id: "viewBookings", label: "View Bookings" },
-  { id: "bookShigra", label: "Book - Shigra Darshan" },
-  { id: "bookVip", label: "Book - VIP Darshan" },
-  { id: "bookLocalide", label: "Book - Localide Darshan" },
-  { id: "bookBhasm", label: "Book - Bhasm Arti" },
-];
-
-export const actionsStore = writable<Action[]>(defaultActions);
-export const user_logged_in = writable(false);
-export const user_phone_number = writable(0);
-export const auth_token = writable("")
-
-
+export const user_logged_in = writable<boolean>(!!storedToken);
