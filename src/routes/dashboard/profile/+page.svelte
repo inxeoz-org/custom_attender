@@ -213,24 +213,6 @@
                                     ></path>
                                 </svg>
                             </div>
-                            <div class="flex-1">
-                                <div class="text-sm font-medium text-gray-500">
-                                    E-KYC Status
-                                </div>
-                                <div class="mt-1">
-                                    <Badge
-                                        color={truthyInt(
-                                            profile.is_ekyc_complete,
-                                        )
-                                            ? "success"
-                                            : "warning"}
-                                    >
-                                        {truthyInt(profile.is_ekyc_complete)
-                                            ? "Completed"
-                                            : "Pending"}
-                                    </Badge>
-                                </div>
-                            </div>
                         </div>
 
                         <div
@@ -251,138 +233,109 @@
                                     ></path>
                                 </svg>
                             </div>
-                            <div class="flex-1">
-                                <div class="text-sm font-medium text-gray-500">
-                                    Companion
-                                </div>
-                                <div class="mt-1">
-                                    <Badge
-                                        color={truthyInt(
-                                            profile.is_devoteee_companion,
-                                        )
-                                            ? "info"
-                                            : "gray"}
+                            <div class="flex-1"></div>
+
+                            <div
+                                class="flex items-center p-3 bg-gray-50 rounded-lg md:col-span-2"
+                            >
+                                <div class="flex-shrink-0 mr-3">
+                                    <svg
+                                        class="w-5 h-5 text-red-500"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
                                     >
-                                        {truthyInt(
-                                            profile.is_devoteee_companion,
-                                        )
-                                            ? "Yes"
-                                            : "No"}
-                                    </Badge>
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                        ></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <div
+                                        class="text-sm font-medium text-gray-500"
+                                    >
+                                        Aadhar Number
+                                    </div>
+                                    <div
+                                        class="text-sm text-gray-900 font-mono"
+                                    >
+                                        {profile.aadhar ?? "—"}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div
-                            class="flex items-center p-3 bg-gray-50 rounded-lg md:col-span-2"
-                        >
-                            <div class="flex-shrink-0 mr-3">
-                                <svg
-                                    class="w-5 h-5 text-red-500"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <div class="text-sm font-medium text-gray-500">
-                                    Aadhar Number
+                            <div
+                                class="flex items-center p-3 bg-gray-50 rounded-lg md:col-span-2"
+                            >
+                                <div class="flex-shrink-0 mr-3">
+                                    <svg
+                                        class="w-5 h-5 text-teal-500"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                        ></path>
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                        ></path>
+                                    </svg>
                                 </div>
-                                <div class="text-sm text-gray-900 font-mono">
-                                    {profile.aadhar ?? "—"}
+                                <div class="flex-1">
+                                    <div
+                                        class="text-sm font-medium text-gray-500"
+                                    >
+                                        Address
+                                    </div>
+                                    <div class="text-sm text-gray-900">
+                                        {profile.location ?? "—"}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div
-                            class="flex items-center p-3 bg-gray-50 rounded-lg md:col-span-2"
-                        >
-                            <div class="flex-shrink-0 mr-3">
-                                <svg
-                                    class="w-5 h-5 text-teal-500"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                    ></path>
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <div class="text-sm font-medium text-gray-500">
-                                    Address
-                                </div>
-                                <div class="text-sm text-gray-900">
-                                    {profile.address ?? "—"}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            class="flex items-center p-3 bg-gray-50 rounded-lg md:col-span-2"
-                        >
-                            <div class="flex-shrink-0 mr-3">
-                                <svg
-                                    class="w-5 h-5 text-gray-500"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <div class="text-sm font-medium text-gray-500">
-                                    Account Created
-                                </div>
-                                <div class="text-sm text-gray-900">
-                                    {profile.creation
-                                        ? new Date(
-                                              profile.creation,
-                                          ).toLocaleDateString("en-IN", {
-                                              year: "numeric",
-                                              month: "long",
-                                              day: "numeric",
-                                          })
-                                        : "—"}
+                            <div
+                                class="flex items-center p-3 bg-gray-50 rounded-lg md:col-span-2"
+                            >
+                                <div class="flex-shrink-0 mr-3">
+                                    <svg
+                                        class="w-5 h-5 text-gray-500"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="mt-8 flex justify-center space-x-4">
-                    <Button
-                        color="light"
-                        class="rounded-full px-5 py-2 font-medium"
-                        onclick={() => updateProfile()}
-                    >
-                        Update Profile
-                    </Button>
-                </div>
-            </Card>
+                    <div class="mt-8 flex justify-center space-x-4">
+                        <Button
+                            color="light"
+                            class="rounded-full px-5 py-2 font-medium"
+                            onclick={() => updateProfile()}
+                        >
+                            Update Profile
+                        </Button>
+                    </div>
+                </div></Card
+            >
         </div>
     {:else}
         <p class="text-gray-600">No profile found.</p>
