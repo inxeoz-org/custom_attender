@@ -158,7 +158,7 @@ export async function updateEmail(newEmail: string, otpEmail: string) {
 
 // Appointment APIs
 export async function get_attender_appointments_list(
-  appointment_date?: string | null,
+  slot_date?: string | null,
 ) {
   try {
     const res = await fetch(
@@ -170,7 +170,7 @@ export async function get_attender_appointments_list(
           Authorization: get(auth_token),
         },
         body: JSON.stringify({
-          appointment_date: appointment_date || null,
+          slot_date,
         }),
       },
     );

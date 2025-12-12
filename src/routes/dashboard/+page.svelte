@@ -52,9 +52,9 @@
         }
 
         if (stats_json_data?.message) {
-            total_schedules = stats_json_data.message.total_schedules;
+            total_schedules = stats_json_data.message.total_appointments;
             marked_exit_schedules =
-                stats_json_data.message.marked_exit_schedules;
+                stats_json_data.message.completed_appointments;
         }
     });
 </script>
